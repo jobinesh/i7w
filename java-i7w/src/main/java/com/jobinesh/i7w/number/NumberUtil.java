@@ -13,20 +13,27 @@ import java.util.ArrayList;
  */
 public class NumberUtil {
 
+    public static long findFctorial(int number){
+        long factorial=1;
+        for(int i=1;i<number;i++){
+            factorial = factorial* i;
+        }
+        return factorial;
+    }
     public static boolean isArmstrong(int number) {
         int originalNumber = number;
         int armstrong = 0;
         while (number > 0) {
             int currentDigit = number % 10;
-            number = number/10;
-            armstrong = armstrong + (int)Math.pow(currentDigit, 3);
+            number = number / 10;
+            armstrong = armstrong + (int) Math.pow(currentDigit, 3);
         }
-        
+
         return armstrong == originalNumber;
     }
 
     public static boolean isPalindrome(int number) {
-     
+
         int originalValue = number;
         int reverse = 0;
         while (number > 0) {
@@ -38,7 +45,7 @@ public class NumberUtil {
     }
 
     public static void main(String[] arg) {
-        System.out.println(NumberUtil.isArmstrong(371));
+        System.out.println(NumberUtil.findFctorial(10));
 
     }
 }
