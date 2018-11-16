@@ -11,24 +11,87 @@ package com.jobinesh.i7w.list;
  */
 public class JLinkedList {
 
+    private Node node = null;
     private Node head = null;
-    private Node currentNode = null;
 
     public void add(JLinkedList.Node node) {
-        if (head == null) {
-            head = node;
+
+        if (this.node != null) {
+            this.node.next = node;
         }
-        if (currentNode != null) {
-            currentNode.next = node;
+        if (this.head == null) {
+            this.head = node;
         }
-        currentNode = node;
+        this.node = node;
 
     }
 
-    public static class Node {
+    @Override
+    public String toString() {
+        return "JLinkedList{" + "head=" + head + '}';
+    }
+
+    public static class Node implements Cloneable {
 
         String data;
         Node next;
+
+        public Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" + "data=" + data + ", next=" + next + '}';
+        }
+
+    }
+
+    public static JLinkedList reverse(JLinkedList list) {
+        JLinkedList reversedList = new JLinkedList();
+        Node currentNode = list.head;
+        Node prevNode = null;
+        while (currentNode != null) {
+
+            Node reversedNode = new Node();
+            reversedNode.data = currentNode.data;
+            reversedNode.next = prevNode;
+            prevNode = reversedNode;
+            System.out.println("prevNode: " + prevNode);
+            currentNode = currentNode.next;
+
+        }
+        reversedList.head = prevNode;
+        return reversedList;
+    }
+
+    public void reverseOrder() throws Exception {
+        Node currentNode = this.head;
+        Node prevNode = null;
+        while (currentNode != null) {
+
+            Node reversedNode = (Node) currentNode.clone(); //new Node();
+            reversedNode.next = prevNode;
+            prevNode = reversedNode;
+            currentNode = currentNode.next;
+
+        }
+        this.head = prevNode;
+        //return reversedList;
+    }
+
+    public Node getMiddleElement() {
+        Node middleNode = head;
+        Node currentNode = head;
+        int totalcount = 1;
+        while (currentNode != null) {
+            if ((totalcount % 2 == 0)) {
+                middleNode = middleNode.next;
+            }
+            totalcount++;
+            currentNode = currentNode.next;
+        }
+        return middleNode;
     }
 
     private static JLinkedList constructList(int size) {
@@ -43,7 +106,7 @@ public class JLinkedList {
     }
 
     public static int count(JLinkedList list) {
-        Node node = list.head;
+        Node node = list.node;
         int cnt = count(node, 0);
         return cnt;
     }
@@ -58,9 +121,51 @@ public class JLinkedList {
         return cnt;
     }
 
-    public static void main(String[] arg) {
-        JLinkedList list = constructList(11);
-        System.out.println("count:" + count(list));
+    public static Node falutyNode(JLinkedList list) {
+        Node fast = list.head;
+        Node slow = list.head;
+        Node faulty = null;
+
+        while (fast != null && fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                faulty = fast;
+                break;
+            }
+        }
+        return faulty;
+    }
+
+    public static Node getElementFromEndAt(JLinkedList list, int cnt) {
+        Node node = list.head;
+        Node nodeNth = list.head;
+
+        int index = 0;
+        while (node != null) {
+            index++;
+            node = node.next;
+            if (index > cnt) {
+                nodeNth = nodeNth.next;
+            }
+
+        }
+        return nodeNth;
+    }
+
+    public static void main(String[] arg) throws Exception {
+        JLinkedList list = constructList(15);
+
+        System.out.println("starting :");
+        System.out.println("Node :" + falutyNode(list));
+
+        String s3 = "JournalDev";
+        int start = 1;
+        char end = 5;
+        System.out.println(start + end);
+        System.out.println(s3.substring(start, end));
+
     }
 
 }
