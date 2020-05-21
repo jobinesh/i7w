@@ -1,5 +1,7 @@
 package com.jobinesh.i7w.array;
 
+import java.util.Arrays;
+
 public class SomeArray {
     public int removeDuplicates(int[] nums) {
         if (nums.length <= 1) {
@@ -22,21 +24,32 @@ public class SomeArray {
         int index = 0;
         int i = 0;
         for (; i < nums.length; i++) {
-            if  (nums[i]>=target) {
+            if (nums[i] >= target) {
                 index = i;
                 break;
             }
         }
-        if(i==nums.length){
-            index=i;
+        if (i == nums.length) {
+            index = i;
         }
         return index;
     }
 
-    public static void main(String[] args) {
-        int[] nums = new int[]{};
-        int len = new SomeArray().searchInsert(nums, 4);
-        System.out.println("index: " + len);
+    public int removeElement(int[] nums, int val) {
+        int index=0;
+        for (int j = 0; j < nums.length ; j++) {
+            if (nums[j ] != val) {
+                nums[index++] = nums[j ];
+            }
+        }
 
+        return index;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{3, 3, 3, 3};
+        int len = new SomeArray().removeElement(nums, 3);
+        System.out.println("len: " + len);
+        System.out.println("array: " + Arrays.toString(nums));
     }
 }
